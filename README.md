@@ -1,5 +1,7 @@
 # pytestgen
 
+**English:** [Use the GitHub Action in your repository](docs/action/README.md) · [Example PR report](https://github.com/ark2016/pytestgen-action-demo/pull/1#issuecomment-6915585513).
+
 LLM-assisted генератор pytest-тестов для Python-модулей. Гибридный подход: статический анализ
 (`ast`), concolic-lite поиск входов для каждой ветки (AST path conditions + Z3), запись
 фактического поведения в изолированном подпроцессе и маленькая локальная LLM (Qwen2.5-Coder
@@ -338,29 +340,7 @@ Workflow [`pr-tests.yml`](.github/workflows/pr-tests.yml) запускает com
 sticky-комментарий с отчётом (маркер `<!-- pytestgen-report -->`, повторный запуск обновляет
 комментарий) и загружает сгенерированные тесты артефактом. В ветку PR ничего не коммитится.
 
-```yaml
-name: pytestgen
-on:
-  pull_request:
-permissions:
-  contents: read
-  pull-requests: write
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0              # нужна история для diff с базой PR
-          persist-credentials: false
-      - uses: ark2016/mipt-9-pytestGen@<tag-or-sha>
-        with:
-          llm-base-url: ${{ vars.PYTESTGEN_LLM_BASE_URL }}
-          llm-model: ${{ vars.PYTESTGEN_LLM_MODEL }}
-          llm-api-key: ${{ secrets.PYTESTGEN_LLM_API_KEY }}
-          paths: src/**/*.py
-          max-files: "5"
-```
+Для подключения к своему репозиторию скопируйте [готовый workflow](docs/action/pytestgen.yml). [Инструкция на английском](docs/action/README.md) включает вариант без API-ключа и пример отчёта на настоящем PR.
 
 Основные входы: `llm-base-url`, `llm-model`, `llm-api-key`, `llm-json-mode` (по умолчанию
 `json_schema`), `paths` (по умолчанию `src/**/*.py`), `max-files` (5), `strategy`
