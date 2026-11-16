@@ -1,20 +1,17 @@
-name: pytestgen PR tests
-description: >-
-  Generate pytest tests with pytestgen for the Python files changed in a pull request, post the
-  coverage-gain report as one sticky PR comment and upload the generated tests as an artifact.
-  Nothing is ever committed to the PR branch.
+name: pytestgen PR Test Generator
+description: Generate pytest tests for changed Python files and report the coverage they add to a pull request.
 author: pytestgen
 branding:
   icon: check-circle
   color: green
 
-# Usage (see .github/workflows/pr-tests.yml for a complete example):
+# Usage (see docs/action/pytestgen.yml for a complete consumer workflow):
 #
 #   permissions: { contents: read, pull-requests: write }
 #   steps:
 #     - uses: actions/checkout@v4
 #       with: { fetch-depth: 0 }          # the diff against the PR base needs history
-#     - uses: <owner>/<repo>@<tag>
+#     - uses: ark2016/mipt-9-pytestGen@v0.1.0
 #       with:
 #         llm-base-url: ${{ vars.PYTESTGEN_LLM_BASE_URL }}
 #         llm-model:    ${{ vars.PYTESTGEN_LLM_MODEL }}
